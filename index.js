@@ -23,20 +23,20 @@ const joinGroup = (body) => {
     "method": "POST",
     "url": `https://${COMETCHAT_APP_ID}.api-${COMETCHAT_REGION}.cometchat.io/v3/groups/${GENERAL_GROUP_GUID}/members`,
     "headers": {
-     "apiKey": `${COMETCHAT_API_KEY}`
+      "apiKey": `${COMETCHAT_API_KEY}`
     },
     "body": {
-     "participants": [
-      `${body.AccountSid}`
-     ]
+      "participants": [
+        `${body.AccountSid}`
+      ]
     },
     "json": true
-   };
-   
-   request(options, function (error, response, b) {
-     console.log('Join group: ');
-     console.log(b);
-   });
+  };
+
+  request(options, function (error, response, b) {
+    console.log('Join group: ');
+    console.log(b);
+  });
 };
 
 const addNewMember = (body) => {
@@ -60,12 +60,42 @@ const addNewMember = (body) => {
   });
 };
 
+const sendMessage = (body) => {
+  if (body) {
+    const options = {
+      "method": "POST",
+      "url": `https://${COMETCHAT_APP_ID}.api-${COMETCHAT_REGION}.cometchat.io/v3/messages`,
+      "headers": {
+        "apiKey": `${COMETCHAT_API_KEY}`,
+        "onBehalfOf": `${body.AccountSid}`
+      },
+      "body": {
+        "receiver": `${body.To}`,
+        "receiverType": "group",
+        "category": "message",
+        "type": "text",
+        "data": {"text": `${body.Body}`}
+      },
+      "json": true
+    };
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+
+      console.log(body);
+    });
+  }
+};
+
 app.post('/webhook/cometchat', (req, res) => {
   console.log('Coming event - Twilio: ');
   console.log(req.body);
   const body = req.body;
   if (body.EventType === 'onMemberAdd') {
     addNewMember(body);
+  }
+  if (body.EventType === 'onMessageSend') {
+    sendMessage(body);
   }
   res.status(200).jsonp({ message: 'Done' });
 });
