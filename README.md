@@ -32,7 +32,6 @@ COMETCHAT_APP_ID=xxx - xxx - xxx - xxx - xxx - xxx - xxx - xxx
 COMETCHAT_APP_REAGION=xxx - xxx - xxx - xxx - xxx - xxx - xxx - xxx
 COMETCHAT_AUTH_KEY=xxx - xxx - xxx - xxx - xxx - xxx - xxx - xxx
 COMETCHAT_API_KEY=xxx - xxx - xxx - xxx - xxx - xxx - xxx - xxx
-GENERAL_GROUP_GUID=xxx - xxx - xxx - xxx - xxx - xxx - xxx - xxx // You should read the tutorial to know about this field.
 ```
 12. Install all the dependencies of the applicatoin by running
 ```js
